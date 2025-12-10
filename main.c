@@ -1,3 +1,15 @@
+void calcDesensPopulacional(int qtdPopulacao, float extArea){ // função para calcular a densidade populacional
+    float densidadePop = qtdPopulacao/extArea;
+
+    printf("Densidade Populacional: %.2f hab/km²\n", densidadePop);
+}
+
+void calcPIBCapita(float PIB, int qtdPopulacao){ // função para calcular o PIB per Capita
+    float pibCapita = PIB/qtdPopulacao;
+
+    printf("PIB per Capita: %.2f reais\n", pibCapita);
+}
+
 int main() {
 
     char estado[2][2]; // Armazena a sigla dos estados
@@ -38,13 +50,25 @@ int main() {
     for (int i = 0; i < 2; i++) { // looping de exibição
 
         printf("\nCarta %d\n", i + 1);
+
         printf("Estado: %s\n", estado[i]); // exibe o estado
+
         printf("Codigo: %s\n", cdCarta[i]); // exibe o codigo
+
         printf("Nome da Cidade: %s\n", nmCidade[i]); // exibe a cidade
+
         printf("Populacao %d\n", qtdPopulacao[i]); // exibe a populacao
+
         printf("Area: %.2f\n", extArea[i]); // exibe a area
+
         printf("PIB: %.2f\n", pib[i]); // exibe o PIB
+
         printf("Numero de Pontos turisticos: %d\n", qtdPontosTuristicos[i]); // exibe a qtd de Pontos Turisticos
+
+        calcDesensPopulacional(qtdPopulacao[i], extArea[i]);
+
+        calcPIBCapita(pib[i], qtdPopulacao[i]);
+
     }
 
     return 0;
