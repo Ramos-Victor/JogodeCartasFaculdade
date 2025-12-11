@@ -1,13 +1,23 @@
-void calcDesensPopulacional(int qtdPopulacao, float extArea){ // função para calcular a densidade populacional
+#include <stdio.h>
+
+float calcDesensPopulacional(int qtdPopulacao, float extArea){ // função para calcular a densidade populacional
     float densidadePop = qtdPopulacao/extArea;
 
-    printf("Densidade Populacional: %.2f hab/km²\n", densidadePop);
+    return densidadePop;
 }
 
-void calcPIBCapita(float PIB, int qtdPopulacao){ // função para calcular o PIB per Capita
-    float pibCapita = PIB/qtdPopulacao;
+float calcPIBCapita(float pib, int qtdPopulacao){ // função para calcular o PIB per Capita
+    float pibCapita = pib/qtdPopulacao;
 
-    printf("PIB per Capita: %.2f reais\n", pibCapita);
+    return pibCapita;
+}
+
+float calcularSuperPoder(float qtdPopulacao, float extArea, float pib, float pibCap, float qtdPontosTuristicos){ // função para calcular o super poder
+    float inversoDensidade = (float) extArea/ (float) qtdPopulacao;
+
+    float superPoder = qtdPopulacao+extArea+pib+pibCap+qtdPontosTuristicos+inversoDensidade;
+
+    return superPoder;
 }
 
 int main() {
@@ -20,6 +30,11 @@ int main() {
     float extArea[2]; // Armazena a ext de Área
     float pib[2]; // Armazena o PIB
     int qtdPontosTuristicos[2]; // Armazena o qtd de Pontos Turisticos
+
+    float densidadePopulacional[2];
+    float pibPerCapita[2];
+
+    float superPoder[2];
 
     for (int i = 0; i < 2; i++) { //looping de coleta dos dados
 
@@ -65,11 +80,32 @@ int main() {
 
         printf("Numero de Pontos turisticos: %d\n", qtdPontosTuristicos[i]); // exibe a qtd de Pontos Turisticos
 
-        calcDesensPopulacional(qtdPopulacao[i], extArea[i]);
+        densidadePopulacional[i] = calcDesensPopulacional(qtdPopulacao[i], extArea[i]); // guarda o valor dentro do vetor
+        
+        printf("Densidade Populacional: %.2f hab/km²\n", densidadePopulacional[i]); // imprime o valor
 
-        calcPIBCapita(pib[i], qtdPopulacao[i]);
+        pibPerCapita[i] = calcPIBCapita(pib[i], qtdPopulacao[i]); // guarda o valor dentro do vetor
 
+        printf("PIB per Capita: %.2f reais\n\n", pibPerCapita[i]); // imprime o valor
+
+        superPoder[i]= calcularSuperPoder((float)qtdPopulacao[i],extArea[i],pib[i], calcPIBCapita(pib[i], qtdPopulacao[i]),(float)qtdPontosTuristicos[i]); // calcula o super poder
     }
+
+    printf("--------------------- Comparação das cartas -----------------\n");
+
+    printf("População: %s", (qtdPopulacao[0]>qtdPopulacao[1]) ? "Carta 1 venceu (1)\n": "Carta 2 venceu (0)\n");
+
+    printf("Área: %s", (extArea[0]>extArea[1]) ? "Carta 1 venceu (1)\n": "Carta 2 venceu (0)\n");
+
+    printf("PIB: %s", (pib[0]>pib[1]) ? "Carta 1 venceu (1)\n": "Carta 2 venceu (0)\n");
+
+    printf("Pontos turisticos: %s", (qtdPontosTuristicos[0]>qtdPontosTuristicos[1]) ? "Carta 1 venceu (1)\n": "Carta 2 venceu (0)\n");
+
+    printf("Densidade Populacional: %s", (densidadePopulacional[0]<densidadePopulacional[1]) ? "Carta 1 venceu (1)\n": "Carta 2 venceu (0)\n");
+
+    printf("PIB per Capita: %s", (pibPerCapita[0]>pibPerCapita[1]) ? "Carta 1 venceu (1)\n": "Carta 2 venceu (0)\n");
+
+    printf("Super Poder: %s", (superPoder[0]>superPoder[1]) ? "Carta 1 venceu (1)\n": "Carta 2 venceu (0)\n");
 
     return 0;
 }
